@@ -10,19 +10,20 @@ export class PreloaderService {
   constructor() {
 
    }
-
-  getPreloaderCount(): number {
+  
+  getPreloaderCount() : number {
     return PreloaderService.fullLoadingCount;
   }
-
-  showPreloaader(): void {
+  
+  showPreloader() : void {
     PreloaderService.fullLoadingCount++;
   }
 
-  hidePreloader(): void {
-    setTimeout(function(){
+  hidePreloader() : void {
+    setTimeout(function() {
       PreloaderService.fullLoadingCount--;
-    }, 1000)
-   
+    }, 1000);
+    
   }
+
 }

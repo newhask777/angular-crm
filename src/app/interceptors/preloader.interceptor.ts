@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import {
   HttpRequest,
   HttpHandler,
@@ -16,35 +15,32 @@ import { tap } from 'rxjs/operators';
 export class PreloaderInterceptor implements HttpInterceptor {
 
   constructor(
-    private preloaderService: PreloaderService
+    private preloaderService : PreloaderService
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    
+
     this.startRequest();
-    return next.handle(request).pipe(
-      tap((event: HttpEvent<any>) => {
-        if(event instanceof HttpResponse){
-          this.endRequest();
+
+    return next.handle(request).pipe(tap((event: HttpEvent<any>) => {
+        if(event instanceof HttpResponse) {
+            this.endRequest();
         }
         
-        // if(event: HttpErrorResponse){
-
-        // }
-      }, 
-        (err: any) => {
-          console.log('Error intercepr', err);
-          this.endRequest();
+        if(event instanceof HttpErrorResponse) {
+            ////error
         }
-      )
-    );
+      },
+      (err: any) => {
+        console.log('Error intercept', err)
+        this.endRequest();
+      }
+    ));
   }
-
   endRequest(): void {
-   this.preloaderService.hidePreloader();
+    this.preloaderService.hidePreloader();
   }
-
   startRequest(): void {
-    this.preloaderService.showPreloaader();
+    this.preloaderService.showPreloader();
   }
 }

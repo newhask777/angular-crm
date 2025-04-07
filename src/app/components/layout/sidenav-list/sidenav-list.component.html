@@ -1,7 +1,5 @@
 <mat-nav-list>
-    <a mat-list-item *ngFor="let item of navigation" [routerLink]="item.path" (click)="onSidenavClose()">
-        <span class="">
-            {{item.title}}
-        </span>
+    <a [routerLink]="item.path" mat-list-item *ngFor="let item of navigation" (click)="onSidenavClose()" >
+        <span class="">{{item.title}}</span>
     </a>
 </mat-nav-list>

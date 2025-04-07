@@ -2,10 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { ResponseHttp } from '../models/responseHttp';
-import { map, catchError } from 'rxjs/operators';
+import {map, catchError } from 'rxjs/operators';
 import { Navigation } from '../models/navigation';
 import { environment } from 'src/environments/environment';
-
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +15,8 @@ export class NavigationService {
 
   getNavigation() : Observable<Navigation[]> {
 
-    return this.http.get<ResponseHttp>(environment.apiUrl + 'api/admin/menus').pipe(
+    return this.http.get<ResponseHttp>(environment.apiUrl +  'api/admin/menus').pipe(
       map((data) =>{
-        console.log(environment.apiUrl + 'api/admin/menus')
         return data.data.items;
       }),
       catchError((error) => {

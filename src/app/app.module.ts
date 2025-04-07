@@ -5,15 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MaterialModule } from './modules/material/material.module';
+import {MaterialModule} from './modules/material/material.module';
 import { LayoutComponent } from './components/layout/layout/layout.component';
 import { NavigationComponent } from './components/layout/navigation/navigation.component';
 import { PreloaderComponent } from './components/layout/preloader/preloader.component';
 import { SidenavListComponent } from './components/layout/sidenav-list/sidenav-list.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { PreloaderInterceptor } from './interceptor/preloader.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PreloaderInterceptor } from './interceptors/preloader.interceptor';
 import { FormComponent } from './components/form/form.component';
 import { LoginComponent } from './components/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthinterceptorInterceptor } from './interceptors/authinterceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,20 +25,27 @@ import { LoginComponent } from './components/login/login.component';
     PreloaderComponent,
     SidenavListComponent,
     FormComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
-      provide: HTTP_INTERCEPTORS,
+      provide : HTTP_INTERCEPTORS,
       useClass: PreloaderInterceptor,
-      multi: true 
+      multi: true
+    },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: AuthinterceptorInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

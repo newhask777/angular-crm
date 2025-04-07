@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Navigation } from 'src/app/models/navigation';
 
 @Component({
@@ -8,7 +9,8 @@ import { Navigation } from 'src/app/models/navigation';
 })
 export class SidenavListComponent implements OnInit {
 
-  @Input() navigation: Navigation[] = [];
+
+  @Input() navigation : Navigation[];
   @Output() sidenavClose = new EventEmitter();
 
   constructor() { }
@@ -16,7 +18,7 @@ export class SidenavListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSidenavClose(): void {
+  onSidenavClose() : void {
     this.sidenavClose.emit();
   }
 

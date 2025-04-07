@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output , EventEmitter} from '@angular/core';
 import { Navigation } from 'src/app/models/navigation';
-import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
@@ -8,9 +7,11 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./navigation.component.sass']
 })
 export class NavigationComponent implements OnInit {
+  
 
-  @Input() navigation: Navigation[] = [];
+  @Input() navigation : Navigation[];
   @Output() sidenavToggle = new EventEmitter();
+
 
   constructor() { }
 
@@ -18,7 +19,7 @@ export class NavigationComponent implements OnInit {
   }
 
   onToggleSidenav() {
-    this.sidenavToggle.emit()
+    this.sidenavToggle.emit();
   }
 
 }

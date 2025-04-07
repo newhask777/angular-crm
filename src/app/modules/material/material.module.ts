@@ -5,20 +5,29 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input'; 
+import {MatButtonModule} from '@angular/material/button';
+
+
 
 const Modules: any[] = [
+  CommonModule,
   MatSidenavModule,
   MatToolbarModule,
   MatListModule,
   MatIconModule,
-  MatProgressSpinnerModule
-]
+  MatProgressSpinnerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule
+]; 
 
 @NgModule({
   declarations: [],
   imports: Modules,
-  exports: Modules
+  exports: Modules,
 
 })
 export class MaterialModule { }

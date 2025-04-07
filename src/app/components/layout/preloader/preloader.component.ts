@@ -8,7 +8,9 @@ import { PreloaderService } from 'src/app/services/preloader/preloader.service';
 })
 export class PreloaderComponent implements OnInit {
 
-  constructor(public preloaderService: PreloaderService) { }
+  constructor(
+    public preloaderService : PreloaderService
+  ) { }
 
   ngOnInit(): void {
   }

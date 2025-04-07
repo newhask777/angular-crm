@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { Navigation } from 'src/app/models/navigation';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
@@ -9,24 +12,38 @@ import { NavigationService } from 'src/app/services/navigation.service';
 })
 export class LayoutComponent implements OnInit {
 
-  navigation : Navigation[] = [];
+  navigation : Navigation[];
   navMenu : boolean = true;
-
+  
   constructor(
-    private navigationService: NavigationService,
-  ) { }
+    private navigationService : NavigationService,
+    private router: Router,
+    private authService: AuthService
+  ) { 
 
-  ngOnInit(): void {
-    this.getMenu();
+    this.router.events.pipe(
+      filter((event:any) => event instanceof NavigationEnd)
+    ).subscribe((url: any) => {
+        if(url.url && url.url.indexOf('login') != 1) {
+          if(this.authService.checkUser() && !this.navigation) {
+            this.getMenu();
+          }
+        }
+    })
+
   }
 
-  getMenu(): void {
-    this.navigationService.getNavigation().subscribe(
-      (data: Navigation[]) => {
-        this.navigation = data;
-        console.log(this.navigation);
-      }
-    );
+  ngOnInit(): void {
+    //this.getMenu();
+  }
+
+  getMenu() : void {
+      this.navigationService.getNavigation().subscribe(
+        (data : Navigation[]) => {
+            this.navigation = data;
+            //console.log(this.navigation);
+        }
+      );
   }
 
 }
