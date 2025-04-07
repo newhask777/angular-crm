@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
 
 
     this.authService.login(this.f.email.value, this.f.password.value)
+    // this.authService.loginDefault(this.f.email.value, this.f.password.value) // Laravel passport
     .pipe(catchError((error: any)=>{
       //console.log('Error login', error);
       this.error = (error.error as ResponseHttp).errors.message;

@@ -16,6 +16,7 @@ import { FormComponent } from './components/form/form.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthinterceptorInterceptor } from './interceptors/authinterceptor.interceptor';
+import { LogoutInterceptor } from './interceptors/logout.interceptor';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,11 @@ import { AuthinterceptorInterceptor } from './interceptors/authinterceptor.inter
     {
       provide : HTTP_INTERCEPTORS,
       useClass: AuthinterceptorInterceptor,
+      multi: true
+    },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: LogoutInterceptor,
       multi: true
     }
   ],

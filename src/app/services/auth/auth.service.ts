@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ResponseHttpLogin } from 'src/app/models/responseHttpLogin';
+import { ResponseHttpLoginDefault } from 'src/app/models/ResponseHttpLoginDefault';
 import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
 
@@ -10,7 +11,40 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
+
+  // Laravel Passport Auth !!!! need CORS
+  loginDefault(email: string, password: string) {
+    return this.http.post<ResponseHttpLoginDefault>(environment.apiUrl + 'oauth/token', { 
+      username : email, 
+      password,
+      client_id : environment.auth.clientId,
+      client_secret : environment.auth.clientSecret,
+      grant_type : "password",
+      scope : ''
+    } ).pipe(
+      map((data)=>{
+        if (data.access_token) {
+          this.setUser(null);
+          this.setToken(data.access_token);
+          this.setRefrashToken(data.refresh_token);
+          
+          return true;
+        }
+
+        return null;
+      }),
+      catchError((error)=>{
+        console.log('Error - ', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  setRefrashToken(refresh_token: string) {
+    sessionStorage.setItem('userTokenRefrash', refresh_token);
+  }
   
+  // custom laravel Auth
   login(email: string, password: string) {
     return this.http.post<ResponseHttpLogin>(environment.apiUrl + 'api/pub/auth/login',{
       email,
@@ -33,9 +67,11 @@ export class AuthService {
     })
     )
   }
+
   setToken(api_token: string) {
     sessionStorage.setItem('userToken', api_token);
   }
+
   setUser(user: string) {
     sessionStorage.setItem('currentUser', user);
   }
@@ -46,6 +82,7 @@ export class AuthService {
     sessionStorage.removeItem('currentUser');
 
   }
+  
   checkUser(): boolean {
     if(sessionStorage.getItem('userToken') && sessionStorage.getItem('currentUser')) {
         return true;
