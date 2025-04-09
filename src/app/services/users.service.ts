@@ -14,6 +14,7 @@ export class UsersService {
   getUsers() : Observable<User[]> {
     return this.http.get<ResponseHttp>(environment.apiUrl + 'api/admin/users').pipe(
       map((data) => {
+        // console.log(data)
         return data.data.items
       }),
       catchError((error) => {
@@ -24,3 +25,4 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 }
+

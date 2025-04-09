@@ -3,10 +3,6 @@ import { Status } from "./status";
 import { Unit } from "./unit";
 
 export class Lead {
-
-    constructor() {
-        
-    }
     id: number;
     link: string;
     phone: string;

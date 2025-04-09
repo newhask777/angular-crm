@@ -17,6 +17,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthinterceptorInterceptor } from './interceptors/authinterceptor.interceptor';
 import { LogoutInterceptor } from './interceptors/logout.interceptor';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LogoutInterceptor } from './interceptors/logout.interceptor';
     SidenavListComponent,
     FormComponent,
     LoginComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
