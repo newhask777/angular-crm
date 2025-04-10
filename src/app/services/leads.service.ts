@@ -5,16 +5,32 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Lead } from '../models/lead';
 import { ResponseHttp } from '../models/responseHttp';
+import { ResponseHttpLead } from '../models/responseHttpLead';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeadsService {
 
+  getLeads() : Observable<{
+    process : Lead[],
+    new : Lead[],
+    done : Lead[]
+  }> {
+    return this.http.get<ResponseHttpLead>(environment.apiUrl + 'api/admin/leads').pipe(
+      map((data) => {
+        return data.data.items
+      }),
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
+
   storeLead(lead: Lead) : Observable<Lead> {
     return this.http.post<ResponseHttp>(environment.apiUrl + 'api/admin/leads', lead).pipe(
       map((data) => {
-        console.log(data)
+        // console.log(data)
         return data.data.item
       }),
       catchError((error) => {

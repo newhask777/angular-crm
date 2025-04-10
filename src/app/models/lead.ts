@@ -12,10 +12,14 @@ export class Lead {
     is_processed: boolean;
     is_express_delivery: boolean;
     is_add_sale: boolean;
-    count_create: boolean;
+    count_create : number;
     status_id: boolean;
     created_at: string;
     source: Source;
     unit: Unit;
     status: Status;
+    lastComment: string;
+    created_at_time: number;
+    isQualityLead : boolean;
+    
 }

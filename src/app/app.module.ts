@@ -18,6 +18,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthinterceptorInterceptor } from './interceptors/authinterceptor.interceptor';
 import { LogoutInterceptor } from './interceptors/logout.interceptor';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NewLeadPipe } from './pipes/new-lead.pipe';
+import { ProcessingPipe } from './pipes/processing.pipe';
+import { DonePipe } from './pipes/done.pipe';
+import { ModalHistoryComponent } from './components/childComponents/modal-history/modal-history.component';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +34,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     FormComponent,
     LoginComponent,
     DashboardComponent,
+    NewLeadPipe,
+    ProcessingPipe,
+    DonePipe,
+    ModalHistoryComponent,
+
   ],
   imports: [
     BrowserModule,

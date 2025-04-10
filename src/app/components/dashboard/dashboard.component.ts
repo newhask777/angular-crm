@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Lead } from 'src/app/models/lead';
+import { LeadsService } from 'src/app/services/leads.service';
+import { ModalHistoryComponent } from '../childComponents/modal-history/modal-history.component';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +13,101 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  nLeads : Lead[];
+  dLeads : Lead[];
+  processingLeads : Lead[];
+
+  leadExpress : boolean = false;
+  leadProcess : boolean = false;
+
+  dleadQuality : boolean = false;
+  dleadQualityFalse : boolean = false;
+
+  processingLeadProcess : boolean = false;
+  
+  constructor(
+    private leadService: LeadsService,
+    private toastService: MatSnackBar,
+    private modalService: MatDialog,
+    ///
+  ) { }
 
   ngOnInit(): void {
+    this.leadService.getLeads().subscribe((data) => {
+      this.nLeads = data.new;
+      this.dLeads = data.done;
+      this.processingLeads = data.process;
+    });
+  }
+
+  openHistory(event, lead: Lead, index: number, leads: Lead[]): void {
+    
+
+    let modalComponentRef = this.modalService.open(ModalHistoryComponent, {
+      width : "80%",
+      data: {
+        nLeads : this.nLeads,
+        processingLeads : this.processingLeads,
+        dLeads : this.dLeads,
+        lead : lead,
+        leads : leads
+      }
+    });
+
+    return;
+
+    /// event subscribe
+
+  }
+
+  datecheck(created_at: number, numb: number, type: string) : boolean {
+    
+    if(type == 'less') {
+      return this.dateHelper('h', new Date(created_at*1000), new Date()) < numb
+;    }
+
+    if(type == 'more') {
+      return this.dateHelper('h', new Date(created_at*1000), new Date()) > numb
+    }
+
+    return false;
+  }
+  
+  dateHelper(datePart: string, fromDate: any, today: any) : number {
+    datePart = datePart.toLowerCase();
+    let diff = today - fromDate;
+
+    let divideBy = {
+      w: 604800000,
+      d: 86400000,
+      h: 3600000,
+      n: 60000,
+      s: 1000
+    };
+
+    return Math.floor(diff/divideBy[datePart]);
+    
+  }
+
+  timeStr(fromDate : any) : string {
+    let resultDate = this.dateHelper('h', new Date(fromDate*1000), new Date());
+
+    let result = "";
+    if(resultDate < 24) {
+      result = "до 24 часов";
+    }
+    else if(resultDate > 24 && resultDate < 48) {
+      result = "24-48 часа";
+    }
+    else if(resultDate > 48 && resultDate < 72) {
+      result = "48-72 часа";
+    }
+    else  {
+      result = "72 часа и более";
+    }
+
+
+    return result;
   }
 
 }

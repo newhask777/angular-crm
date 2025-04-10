@@ -12,6 +12,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -27,7 +30,10 @@ const Modules: any[] = [
   MatButtonModule,
   MatSnackBarModule,
   MatRadioModule,
-  MatSelectModule
+  MatSelectModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDialogModule
 ]; 
 
 @NgModule({
